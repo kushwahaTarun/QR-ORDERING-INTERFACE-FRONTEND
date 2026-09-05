@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import {
   CookingPot,
@@ -17,10 +16,12 @@ import { KpiCard } from "@/components/house/kpi-card";
 import { LoadState } from "@/components/house/load-state";
 import { PageHeader } from "@/components/house/page-header";
 import { StatusBadge } from "@/components/house/status-badge";
+import { Button } from "@/components/ui/button";
 import { useAuth } from "@/components/house/auth-provider";
 import { useLiveOrders } from "@/components/house/live-provider";
 import { greetingNow } from "@/lib/copy";
 import { formatTime, inr } from "@/lib/format";
+import { appleSpring } from "@/lib/motion";
 import { isOpenStatus, upsertOrder } from "@/lib/live";
 import type { HouseOrder } from "@/lib/types";
 import { useHouse } from "@/lib/use-house";
@@ -137,7 +138,7 @@ export default function TodayPage() {
     data && "restaurant" in data ? data.restaurant.name : "";
 
   return (
-    <div>
+    <div className="space-y-8">
       <PageHeader
         icon={House}
         title={houseName ? `${greetingNow()} — ${houseName}` : greetingNow()}
@@ -203,16 +204,13 @@ function RestaurantView({ data }: { data: RestaurantDash }) {
       <div className="grid gap-4 lg:grid-cols-[1.4fr_0.9fr]">
         <section className="surface rounded-md p-5">
           <div className="mb-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
+            <div className="group flex items-center gap-3">
               <IconWell icon={CookingPot} size="sm" />
               <h2 className="font-heading text-2xl">Kitchen now</h2>
             </div>
-            <Link
-              href="/orders"
-              className="text-[11px] uppercase tracking-[0.16em] text-primary"
-            >
+            <Button href="/orders" variant="link" size="sm" className="px-0">
               Open kitchen
-            </Link>
+            </Button>
           </div>
           {data.liveOrders.length === 0 ? (
             <p className="text-sm text-muted-foreground">
@@ -224,10 +222,10 @@ function RestaurantView({ data }: { data: RestaurantDash }) {
               {data.liveOrders.map((order) => (
                 <motion.li
                   key={order.id}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                  initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={appleSpring}
                   className="flex items-start justify-between gap-3 border-b border-border pb-3 last:border-0 last:pb-0"
                 >
                   <div>
@@ -331,7 +329,7 @@ function PlatformView({
             <li key={row.id} className="border-t border-border pt-3">
               <button
                 type="button"
-                className="cursor-pointer text-left"
+                className="press cursor-pointer text-left"
                 onClick={() => onOpen(row.id)}
               >
                 <p className="font-medium hover:text-primary">{row.name}</p>

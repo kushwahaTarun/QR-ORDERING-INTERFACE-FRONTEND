@@ -1,4 +1,5 @@
 import { Phone, WhatsappLogo } from "@phosphor-icons/react";
+import { Button } from "@/components/ui/button";
 import { formatVisit, inr } from "@/lib/format";
 import {
   formatIndianMobile,
@@ -7,9 +8,6 @@ import {
   whatsappHref,
 } from "@/lib/phone";
 import type { Guest } from "@/lib/types";
-
-const actionClass =
-  "inline-flex min-h-11 flex-1 cursor-pointer items-center justify-center gap-1.5 border border-border px-3 text-[11px] uppercase tracking-[0.14em] text-muted-foreground transition-colors duration-300 hover:border-primary hover:text-foreground sm:flex-none sm:min-w-32";
 
 export function GuestCard({
   guest,
@@ -25,7 +23,7 @@ export function GuestCard({
   const regular = guest.orders >= 2;
 
   return (
-    <article className="surface flex flex-col gap-4 rounded-md p-4 transition-colors duration-300 hover:border-primary/40 sm:flex-row sm:items-center sm:justify-between">
+    <article className="lift surface flex flex-col gap-4 rounded-md p-4 hover:border-primary/40 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex min-w-0 items-start gap-3">
         <span
           className="icon-well h-12 w-12 font-heading text-lg"
@@ -86,26 +84,29 @@ export function GuestCard({
         {chat || call ? (
           <div className="flex gap-2">
             {chat ? (
-              <a
+              <Button
                 href={chat}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={actionClass}
+                external
+                variant="secondary"
+                size="sm"
+                className="flex-1 sm:flex-none sm:min-w-32"
                 aria-label={`WhatsApp ${displayName}`}
               >
                 <WhatsappLogo size={16} weight="duotone" aria-hidden="true" />
                 WhatsApp
-              </a>
+              </Button>
             ) : null}
             {call ? (
-              <a
+              <Button
                 href={call}
-                className={actionClass}
+                variant="secondary"
+                size="sm"
+                className="flex-1 sm:flex-none sm:min-w-32"
                 aria-label={`Call ${displayName}`}
               >
                 <Phone size={16} weight="duotone" aria-hidden="true" />
                 Call
-              </a>
+              </Button>
             ) : null}
           </div>
         ) : null}

@@ -1,7 +1,8 @@
 "use client";
 
 import { FormEvent, useMemo, useRef, useState } from "react";
-import { ForkKnife, MagnifyingGlass, Plus } from "@phosphor-icons/react";
+import { LayoutGroup } from "motion/react";
+import { ForkKnife, Plus } from "@phosphor-icons/react";
 import { toast } from "sonner";
 import { EmptyState } from "@/components/house/empty-state";
 import { FilterChip } from "@/components/house/filter-chip";
@@ -9,7 +10,8 @@ import { LoadState } from "@/components/house/load-state";
 import { MenuDishCard } from "@/components/house/menu-dish-card";
 import { PageHeader } from "@/components/house/page-header";
 import { Button } from "@/components/ui/button";
-import { Field, Input, Textarea } from "@/components/ui/input";
+import { CheckRow, Field, Input, Select, Textarea } from "@/components/ui/input";
+import { SearchField } from "@/components/ui/search-field";
 import { houseSend } from "@/lib/api";
 import type { MenuCategory, MenuItem } from "@/lib/types";
 import { useHouse } from "@/lib/use-house";
@@ -194,7 +196,7 @@ export default function MenuPage() {
   const showForm = creating || editing;
 
   return (
-    <div>
+    <div className="space-y-8">
       <PageHeader
         icon={ForkKnife}
         title="Menu"
@@ -215,21 +217,14 @@ export default function MenuPage() {
               {` · ${data.categories.length} sections`}
             </p>
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <label className="relative min-w-0 flex-1">
-                <MagnifyingGlass
-                  className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 text-primary"
-                  size={18}
-                  weight="duotone"
-                />
-                <Input
-                  className="pl-7"
-                  placeholder="Find a dish"
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  aria-label="Find a dish"
-                />
-              </label>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+              <SearchField
+                id="find-dish"
+                label="Find a dish"
+                placeholder="Garlic naan"
+                value={query}
+                onChange={setQuery}
+              />
               <Button
                 type="button"
                 variant="secondary"
@@ -288,12 +283,14 @@ export default function MenuPage() {
             ) : null}
 
             {!query.trim() ? (
+              <LayoutGroup>
               <div
                 className="flex flex-wrap gap-2"
                 role="tablist"
                 aria-label="Menu section"
               >
                 <FilterChip
+                  layoutId="menu-section"
                   active={section === "all"}
                   onClick={() => setSection("all")}
                 >
@@ -302,6 +299,7 @@ export default function MenuPage() {
                 {data.categories.map((category) => (
                   <FilterChip
                     key={category.id}
+                    layoutId="menu-section"
                     active={section === category.id}
                     onClick={() => setSection(category.id)}
                   >
@@ -309,6 +307,7 @@ export default function MenuPage() {
                   </FilterChip>
                 ))}
               </div>
+              </LayoutGroup>
             ) : (
               <p className="text-sm text-muted-foreground">
                 {items.length} {items.length === 1 ? "match" : "matches"} for “
@@ -356,9 +355,8 @@ export default function MenuPage() {
                     />
                   </Field>
                   <Field label="Section" htmlFor="item-cat">
-                    <select
+                    <Select
                       id="item-cat"
-                      className="min-h-12 w-full border-0 border-b border-input bg-transparent px-0 text-base"
                       value={form.categoryId}
                       onChange={(event) =>
                         setForm((current) => ({
@@ -372,12 +370,11 @@ export default function MenuPage() {
                           {category.name}
                         </option>
                       ))}
-                    </select>
+                    </Select>
                   </Field>
                   <Field label="Veg or non-veg" htmlFor="item-diet">
-                    <select
+                    <Select
                       id="item-diet"
-                      className="min-h-12 w-full border-0 border-b border-input bg-transparent px-0 text-base"
                       value={form.diet}
                       onChange={(event) =>
                         setForm((current) => ({
@@ -389,7 +386,7 @@ export default function MenuPage() {
                       <option value="veg">Veg</option>
                       <option value="non-veg">Non-veg</option>
                       <option value="egg">Egg</option>
-                    </select>
+                    </Select>
                   </Field>
                   <div className="md:col-span-2">
                     <Field label="Short description" htmlFor="item-desc">
@@ -423,32 +420,24 @@ export default function MenuPage() {
                       />
                     </Field>
                   </div>
-                  <label className="flex min-h-11 items-center gap-2 text-sm">
-                    <input
-                      type="checkbox"
-                      checked={form.available}
-                      onChange={(event) =>
-                        setForm((current) => ({
-                          ...current,
-                          available: event.target.checked,
-                        }))
-                      }
-                    />
+                  <CheckRow
+                    id="item-available"
+                    checked={form.available}
+                    onChange={(available) =>
+                      setForm((current) => ({ ...current, available }))
+                    }
+                  >
                     Show on the menu
-                  </label>
-                  <label className="flex min-h-11 items-center gap-2 text-sm">
-                    <input
-                      type="checkbox"
-                      checked={form.popular}
-                      onChange={(event) =>
-                        setForm((current) => ({
-                          ...current,
-                          popular: event.target.checked,
-                        }))
-                      }
-                    />
+                  </CheckRow>
+                  <CheckRow
+                    id="item-popular"
+                    checked={form.popular}
+                    onChange={(popular) =>
+                      setForm((current) => ({ ...current, popular }))
+                    }
+                  >
                     Mark as popular
-                  </label>
+                  </CheckRow>
                   <div className="flex flex-wrap gap-2 md:col-span-2">
                     <Button type="submit">Save dish</Button>
                     <Button type="button" variant="ghost" onClick={closeForm}>

@@ -1,6 +1,7 @@
 "use client";
 
 import { Eye, EyeSlash, PencilSimple, Star } from "@phosphor-icons/react";
+import { Button } from "@/components/ui/button";
 import { dietLabel } from "@/lib/copy";
 import { inrExact } from "@/lib/format";
 import type { MenuItem } from "@/lib/types";
@@ -24,7 +25,7 @@ export function MenuDishCard({
   return (
     <article
       className={cn(
-        "surface flex h-full flex-col overflow-hidden rounded-md",
+        "lift surface flex h-full flex-col overflow-hidden rounded-md",
         !item.available && "opacity-60",
       )}
     >
@@ -60,10 +61,11 @@ export function MenuDishCard({
         </p>
         <p className="mt-auto pt-3 font-heading text-lg">{inrExact(item.price)}</p>
         <div className="mt-3 flex gap-2">
-          <button
-            type="button"
+          <Button
+            variant="secondary"
+            size="sm"
+            className="flex-1 px-2"
             onClick={onToggle}
-            className="inline-flex min-h-10 flex-1 cursor-pointer items-center justify-center gap-1.5 border border-border text-[11px] uppercase tracking-[0.14em] text-muted-foreground transition-colors duration-300 hover:text-foreground"
           >
             {item.available ? (
               <EyeSlash size={15} weight="duotone" />
@@ -71,15 +73,16 @@ export function MenuDishCard({
               <Eye size={15} weight="duotone" />
             )}
             {item.available ? "Hide" : "Show"}
-          </button>
-          <button
-            type="button"
+          </Button>
+          <Button
+            variant="secondary"
+            size="sm"
+            className="flex-1 px-2"
             onClick={onEdit}
-            className="inline-flex min-h-10 flex-1 cursor-pointer items-center justify-center gap-1.5 border border-border text-[11px] uppercase tracking-[0.14em] text-muted-foreground transition-colors duration-300 hover:text-foreground"
           >
             <PencilSimple size={15} weight="duotone" />
             Edit
-          </button>
+          </Button>
         </div>
       </div>
     </article>
