@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, LayoutGroup } from "motion/react";
 import { toast } from "sonner";
 import { CookingPot, Fire, CheckCircle, Bell } from "@phosphor-icons/react";
@@ -10,6 +10,7 @@ import { LoadState } from "@/components/house/load-state";
 import { FilterChip } from "@/components/house/filter-chip";
 import { PageHeader } from "@/components/house/page-header";
 import { PaperSlip } from "@/components/house/paper-slip";
+import { TickValue } from "@/components/house/tick-value";
 import { Button } from "@/components/ui/button";
 import {
   NEXT_ACTION,
@@ -129,7 +130,7 @@ export default function KitchenPage() {
           <div className="grid gap-10 lg:grid-cols-3">
             {columns.map((status) => (
               <section key={status}>
-                <div className="mb-4 flex items-center gap-3">
+                <div className="group mb-4 flex items-center gap-3">
                   <IconWell
                     icon={
                       status in columnMeta
@@ -143,7 +144,7 @@ export default function KitchenPage() {
                       {STATUS_LABEL[status]}
                     </p>
                     <h2 className="font-heading text-2xl leading-none">
-                      {grouped[status]?.length ?? 0}
+                      <TickValue value={grouped[status]?.length ?? 0} />
                     </h2>
                   </div>
                 </div>
@@ -179,8 +180,27 @@ function KitchenSlip({
   onStatus: (order: HouseOrder, status: OrderStatus) => void;
 }) {
   const next = NEXT_STATUS[order.status];
+  const [stamp, setStamp] = useState<string | null>(null);
+  const previous = useRef(order.status);
+
+  useEffect(() => {
+    if (previous.current === order.status) return;
+    previous.current = order.status;
+    setStamp(STATUS_LABEL[order.status]);
+    const timer = window.setTimeout(() => setStamp(null), 1400);
+    return () => window.clearTimeout(timer);
+  }, [order.status]);
+
   return (
     <PaperSlip index={index}>
+      {stamp ? (
+        <span
+          className="ink-stamp pointer-events-none absolute right-4 top-6 border-2 border-[#8e3a3a] px-2 py-1 font-heading text-xl uppercase tracking-[0.18em] text-[#8e3a3a]"
+          aria-hidden="true"
+        >
+          {stamp}
+        </span>
+      ) : null}
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-[10px] uppercase tracking-[0.22em] text-[#8e3a3a]">

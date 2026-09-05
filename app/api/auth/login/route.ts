@@ -1,14 +1,24 @@
 import { NextResponse } from "next/server";
-
-const API_BASE = process.env.API_BASE_URL ?? "http://127.0.0.1:3001";
+import { apiBase } from "@/lib/api-base";
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => ({}));
-  const upstream = await fetch(`${API_BASE}/v1/admin/auth/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
+  let upstream: Response;
+  try {
+    upstream = await fetch(`${apiBase()}/v1/admin/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+  } catch {
+    return NextResponse.json(
+      {
+        message:
+          "Cannot reach the restaurant API. Set API_BASE_URL to the Render host with no /v1 on the end.",
+      },
+      { status: 502 },
+    );
+  }
   const payload = (await upstream.json().catch(() => ({}))) as {
     token?: string;
     staff?: { restaurantId?: string | null };

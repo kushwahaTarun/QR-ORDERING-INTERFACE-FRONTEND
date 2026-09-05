@@ -22,7 +22,7 @@ export function PaperSlip({
       exit={reduce ? undefined : { opacity: 0, scale: 0.98 }}
       whileHover={reduce ? undefined : hoverLift}
       transition={appleSpring}
-      className={cn("paper-slip p-5", className)}
+      className={cn("paper-slip relative p-5", className)}
     >
       {children}
     </motion.article>

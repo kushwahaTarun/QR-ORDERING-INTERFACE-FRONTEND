@@ -3,16 +3,21 @@
 import type { Icon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { IconWell } from "@/components/house/icon-well";
+import { TickValue } from "@/components/house/tick-value";
 import { appleSpring, hoverLift } from "@/lib/motion";
 
 export function KpiCard({
   label,
   value,
+  amount,
+  format,
   hint,
   icon,
 }: {
   label: string;
   value: string;
+  amount?: number | null;
+  format?: (n: number) => string;
   hint?: string;
   icon: Icon;
   index?: number;
@@ -31,7 +36,11 @@ export function KpiCard({
           {label}
         </p>
         <p className="mt-1 font-heading text-3xl leading-none tracking-tight">
-          {value}
+          {amount === null || amount === undefined ? (
+            value
+          ) : (
+            <TickValue value={amount} format={format} />
+          )}
         </p>
         {hint ? (
           <p className="mt-1 text-xs text-muted-foreground">{hint}</p>

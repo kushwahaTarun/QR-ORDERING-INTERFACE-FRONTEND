@@ -171,12 +171,15 @@ function RestaurantView({ data }: { data: RestaurantDash }) {
           icon={Receipt}
           label="Orders today"
           value={String(data.kpis.ordersToday)}
+          amount={data.kpis.ordersToday}
           index={0}
         />
         <KpiCard
           icon={CurrencyInr}
           label="Sales today"
           value={inr(data.kpis.revenueToday)}
+          amount={data.kpis.revenueToday}
+          format={inr}
           hint={
             data.kpis.revenueToday === null ? "Shown to the owner" : undefined
           }
@@ -186,18 +189,21 @@ function RestaurantView({ data }: { data: RestaurantDash }) {
           icon={CookingPot}
           label="In the kitchen"
           value={String(data.kpis.openOrders)}
+          amount={data.kpis.openOrders}
           index={2}
         />
         <KpiCard
           icon={QrCode}
           label="Tables"
           value={String(data.kpis.tables)}
+          amount={data.kpis.tables}
           index={3}
         />
         <KpiCard
           icon={UsersThree}
           label="Guests for offers"
           value={String(data.kpis.offerOptInsToday)}
+          amount={data.kpis.offerOptInsToday}
           index={4}
         />
       </div>
@@ -301,24 +307,29 @@ function PlatformView({
           icon={House}
           label="Restaurants"
           value={String(data.kpis.restaurants)}
+          amount={data.kpis.restaurants}
           index={0}
         />
         <KpiCard
           icon={Receipt}
           label="Orders today"
           value={String(data.kpis.ordersToday)}
+          amount={data.kpis.ordersToday}
           index={1}
         />
         <KpiCard
           icon={CurrencyInr}
           label="Sales today"
           value={inr(data.kpis.revenueToday)}
+          amount={data.kpis.revenueToday}
+          format={inr}
           index={2}
         />
         <KpiCard
           icon={CookingPot}
           label="In the kitchen"
           value={String(data.kpis.openOrders)}
+          amount={data.kpis.openOrders}
           index={3}
         />
       </div>

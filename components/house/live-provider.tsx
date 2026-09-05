@@ -11,6 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import { toast } from "sonner";
+import { OrderSlipToast } from "@/components/house/order-slip-toast";
 import { useAuth } from "@/components/house/auth-provider";
 import {
   askNotificationPermission,
@@ -64,9 +65,16 @@ export function LiveProvider({ children }: { children: ReactNode }) {
         listeners.current.forEach((listener) => listener(payload));
         if (payload.type === "order.created") {
           const dishes = dishesLine(payload.order);
-          toast.message(`New order · Table ${payload.order.tableNumber}`, {
-            description: dishes || "A guest just ordered.",
-          });
+          toast.custom(
+            () => (
+              <OrderSlipToast
+                tableNumber={payload.order.tableNumber}
+                dishes={dishes}
+                house={payload.restaurantName}
+              />
+            ),
+            { duration: 8000, unstyled: true },
+          );
           playOrderChime();
           notifyBrowser(
             `${payload.restaurantName} · Table ${payload.order.tableNumber}`,

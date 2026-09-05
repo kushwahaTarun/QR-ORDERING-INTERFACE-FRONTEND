@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-
-const API_BASE = process.env.API_BASE_URL ?? "http://127.0.0.1:3001";
+import { apiBase } from "@/lib/api-base";
 
 export async function GET() {
   const store = await cookies();
@@ -10,7 +9,7 @@ export async function GET() {
     return NextResponse.json({ message: "Sign in to continue." }, { status: 401 });
   }
 
-  const upstream = await fetch(`${API_BASE}/v1/admin/auth/me`, {
+  const upstream = await fetch(`${apiBase()}/v1/admin/auth/me`, {
     headers: { Authorization: `Bearer ${token}` },
     cache: "no-store",
   });

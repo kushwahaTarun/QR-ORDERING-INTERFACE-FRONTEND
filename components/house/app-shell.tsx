@@ -106,7 +106,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-dvh lg:grid lg:grid-cols-[16.5rem_1fr]">
-      <aside className="border-b border-border bg-[#0c0a08] print:hidden lg:sticky lg:top-0 lg:flex lg:h-dvh lg:flex-col lg:border-b-0 lg:border-r">
+      <aside className="house-rail border-b border-border print:hidden lg:sticky lg:top-0 lg:flex lg:h-dvh lg:flex-col lg:border-b-0 lg:border-r">
         <div className="flex items-center justify-between px-5 py-5 lg:block">
           <div>
             <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-primary">
