@@ -40,8 +40,12 @@ export default function RootLayout({
             toastOptions={{
               style: {
                 background: "#1a1612",
-                border: "1px solid rgba(201,163,106,0.22)",
+                border: "1px solid rgba(201,163,106,0.28)",
                 color: "#f3ebe0",
+                fontFamily: "var(--font-outfit), sans-serif",
+              },
+              classNames: {
+                title: "font-heading",
               },
             }}
           />

@@ -69,16 +69,20 @@ export default function GuestsPage() {
                 icon={UsersThree}
                 label="In the book"
                 value={String(guests.length)}
+                amount={guests.length}
               />
               <KpiCard
                 icon={Megaphone}
                 label="Wants offers"
                 value={String(offerCount)}
+                amount={offerCount}
               />
               <KpiCard
                 icon={CurrencyInr}
                 label="Spent with us"
                 value={inr(spent)}
+                amount={spent}
+                format={inr}
               />
             </div>
 

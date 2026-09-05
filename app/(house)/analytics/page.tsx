@@ -252,21 +252,27 @@ export default function SalesPage() {
                 icon={Receipt}
                 label="Orders"
                 value={String(data.totals.orders)}
+                amount={data.totals.orders}
               />
               <KpiCard
                 icon={CurrencyInr}
                 label="Sales"
                 value={inr(data.totals.revenue)}
+                amount={data.totals.revenue}
+                format={inr}
               />
               <KpiCard
                 icon={ChartLineUp}
                 label="Average bill"
                 value={inr(data.totals.averageTicket)}
+                amount={data.totals.averageTicket}
+                format={inr}
               />
               <KpiCard
                 icon={XCircle}
                 label="Cancelled"
                 value={String(data.totals.cancelled)}
+                amount={data.totals.cancelled}
               />
             </div>
 

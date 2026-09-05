@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-
-const API_BASE = process.env.API_BASE_URL ?? "http://127.0.0.1:3001";
+import { apiBase } from "@/lib/api-base";
 
 async function proxy(
   request: NextRequest,
@@ -15,7 +14,7 @@ async function proxy(
   }
 
   const search = request.nextUrl.search;
-  const url = `${API_BASE}/v1/${path.join("/")}${search}`;
+  const url = `${apiBase()}/v1/${path.join("/")}${search}`;
   const headers = new Headers();
   headers.set("Authorization", `Bearer ${token}`);
   const restaurantId = store.get("house_restaurant")?.value;

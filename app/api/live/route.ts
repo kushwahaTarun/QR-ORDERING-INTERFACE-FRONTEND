@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-
-const API_BASE = process.env.API_BASE_URL ?? "http://127.0.0.1:3001";
+import { apiBase } from "@/lib/api-base";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -21,7 +20,7 @@ export async function GET() {
     headers.set("X-Restaurant-Id", restaurantId);
   }
 
-  const upstream = await fetch(`${API_BASE}/v1/admin/live`, {
+  const upstream = await fetch(`${apiBase()}/v1/admin/live`, {
     headers,
     cache: "no-store",
   });

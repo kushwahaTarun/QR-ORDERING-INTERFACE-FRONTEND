@@ -57,16 +57,21 @@ export default function ReportsPage() {
                 icon={Receipt}
                 label="Orders"
                 value={String(totals.orders)}
+                amount={totals.orders}
               />
               <KpiCard
                 icon={CurrencyInr}
                 label="Sales"
                 value={inr(totals.revenue)}
+                amount={totals.revenue}
+                format={inr}
               />
               <KpiCard
                 icon={ChartLineUp}
                 label="Average bill"
                 value={inr(totals.averageTicket)}
+                amount={totals.averageTicket}
+                format={inr}
               />
             </div>
 
