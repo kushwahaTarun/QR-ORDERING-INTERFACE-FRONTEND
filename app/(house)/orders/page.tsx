@@ -1,12 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { AnimatePresence } from "motion/react";
+import { AnimatePresence, LayoutGroup } from "motion/react";
 import { toast } from "sonner";
 import { CookingPot, Fire, CheckCircle, Bell } from "@phosphor-icons/react";
 import { EmptyState } from "@/components/house/empty-state";
 import { IconWell } from "@/components/house/icon-well";
 import { LoadState } from "@/components/house/load-state";
+import { FilterChip } from "@/components/house/filter-chip";
 import { PageHeader } from "@/components/house/page-header";
 import { PaperSlip } from "@/components/house/paper-slip";
 import { Button } from "@/components/ui/button";
@@ -96,24 +97,26 @@ export default function KitchenPage() {
   } as const;
 
   return (
-    <div>
+    <div className="space-y-8">
       <PageHeader
         icon={CookingPot}
         title="Kitchen"
         description="New, cooking, then ready to send to the table."
       />
-      <div className="mb-10 flex flex-wrap gap-2">
-        {FILTERS.map((entry) => (
-          <Button
-            key={entry.id}
-            size="sm"
-            variant={filter === entry.id ? "primary" : "ghost"}
-            onClick={() => setFilter(entry.id)}
-          >
-            {entry.label}
-          </Button>
-        ))}
-      </div>
+      <LayoutGroup>
+        <div className="flex flex-wrap gap-2" role="group" aria-label="Kitchen view">
+          {FILTERS.map((entry) => (
+            <FilterChip
+              key={entry.id}
+              layoutId="kitchen-status"
+              active={filter === entry.id}
+              onClick={() => setFilter(entry.id)}
+            >
+              {entry.label}
+            </FilterChip>
+          ))}
+        </div>
+      </LayoutGroup>
       <LoadState loading={loading && !data} error={error}>
         {(orders ?? []).length === 0 ? (
           <EmptyState
@@ -203,22 +206,24 @@ function KitchenSlip({
       </p>
       <div className="mt-5 flex flex-wrap gap-3 border-t border-[#1c140e]/15 pt-4">
         {next ? (
-          <button
-            type="button"
-            className="cursor-pointer text-[11px] font-medium uppercase tracking-[0.16em] text-ink"
+          <Button
+            variant="inkGhost"
+            size="sm"
+            className="px-0"
             onClick={() => onStatus(order, next)}
           >
             {NEXT_ACTION[order.status]}
-          </button>
+          </Button>
         ) : null}
         {order.status !== "served" && order.status !== "cancelled" ? (
-          <button
-            type="button"
-            className="cursor-pointer text-[11px] uppercase tracking-[0.16em] text-[#8e3a3a]"
+          <Button
+            variant="accentGhost"
+            size="sm"
+            className="px-0"
             onClick={() => onStatus(order, "cancelled")}
           >
             Cancel
-          </button>
+          </Button>
         ) : null}
       </div>
     </PaperSlip>

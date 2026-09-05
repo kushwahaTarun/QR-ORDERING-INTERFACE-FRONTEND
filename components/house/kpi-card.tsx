@@ -3,6 +3,7 @@
 import type { Icon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { IconWell } from "@/components/house/icon-well";
+import { appleSpring, hoverLift } from "@/lib/motion";
 
 export function KpiCard({
   label,
@@ -20,9 +21,9 @@ export function KpiCard({
   return (
     <motion.div
       initial={false}
-      whileHover={reduce ? undefined : { y: -2 }}
-      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      className="surface flex items-start gap-4 rounded-md px-4 py-4 transition-colors duration-300 hover:border-primary/40"
+      whileHover={reduce ? undefined : hoverLift}
+      transition={appleSpring}
+      className="group surface flex items-start gap-4 rounded-md px-4 py-4 transition-colors duration-500 hover:border-primary/40"
     >
       <IconWell icon={icon} />
       <div className="min-w-0">

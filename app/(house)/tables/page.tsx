@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { toast } from "sonner";
@@ -56,27 +55,24 @@ export default function TablesPage() {
   }
 
   return (
-    <div>
+    <div className="space-y-8">
       <PageHeader
         icon={QrCode}
         title="Table cards"
         description="Print a card for each table. Guests scan it and order from that table only."
         actions={
-          <Link
-            href="/tables/print"
-            className="inline-flex min-h-11 items-center gap-2 text-[11px] uppercase tracking-[0.16em] text-primary"
-          >
+          <Button href="/tables/print" variant="link">
             <Printer size={18} weight="duotone" />
             Print all cards
-          </Link>
+          </Button>
         }
       />
       <LoadState loading={loading} error={error}>
         {!data ? null : (
-          <>
+          <div className="space-y-8">
             <form
               onSubmit={addTable}
-              className="mb-12 flex max-w-md flex-col gap-4 sm:flex-row sm:items-end"
+              className="flex max-w-md flex-col gap-4 sm:flex-row sm:items-end"
             >
               <Field label="New table number" htmlFor="table-number">
                 <Input
@@ -112,19 +108,20 @@ export default function TablesPage() {
                       <p className="mt-5 text-sm text-[#5c4c3c]">
                         Scan to order from this table
                       </p>
-                      <button
-                        type="button"
-                        className="mt-4 cursor-pointer text-[10px] uppercase tracking-[0.16em] text-[#8e3a3a]"
+                      <Button
+                        variant="accentGhost"
+                        size="sm"
+                        className="mt-4 px-0"
                         onClick={() => void removeTable(table.tableNumber)}
                       >
                         Remove
-                      </button>
+                      </Button>
                     </PaperSlip>
                   </li>
                 ))}
               </ul>
             )}
-          </>
+          </div>
         )}
       </LoadState>
     </div>

@@ -15,7 +15,7 @@ export function IconWell({
   const glyph = size === "lg" ? 26 : size === "sm" ? 18 : 22;
 
   return (
-    <span className={cn("icon-well transition-transform duration-300 ease-out", box, className)}>
+    <span className={cn("icon-well", box, className)}>
       <Icon weight="duotone" size={glyph} />
     </span>
   );

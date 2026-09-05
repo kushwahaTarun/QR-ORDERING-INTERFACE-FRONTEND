@@ -8,18 +8,25 @@ function nowLabel() {
     weekday: "short",
     hour: "2-digit",
     minute: "2-digit",
-  }).format(new Date());
+    hour12: true,
+  })
+    .format(new Date())
+    .toLowerCase();
 }
 
 export function Clock() {
-  const [label, setLabel] = useState(nowLabel);
+  const [label, setLabel] = useState("");
 
   useEffect(() => {
-    const id = window.setInterval(() => setLabel(nowLabel()), 15_000);
+    const tick = () => setLabel(nowLabel());
+    tick();
+    const id = window.setInterval(tick, 15_000);
     return () => window.clearInterval(id);
   }, []);
 
   return (
-    <p className="text-[11px] uppercase tracking-[0.2em] text-primary">{label}</p>
+    <p className="min-w-[9rem] text-[11px] uppercase tracking-[0.2em] text-primary">
+      {label || "\u00a0"}
+    </p>
   );
 }

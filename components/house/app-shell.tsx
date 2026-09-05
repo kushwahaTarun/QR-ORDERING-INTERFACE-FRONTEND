@@ -19,9 +19,13 @@ import {
   type Icon,
 } from "@phosphor-icons/react";
 import { Clock } from "@/components/house/clock";
+import { PageEnter } from "@/components/house/page-enter";
+import { Button } from "@/components/ui/button";
+import { Select } from "@/components/ui/input";
 import { useLive } from "@/components/house/live-provider";
 import { useAuth } from "@/components/house/auth-provider";
 import { roleLabel } from "@/lib/copy";
+import { appleSpring } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 type NavItem = {
@@ -130,19 +134,20 @@ export function AppShell({ children }: { children: ReactNode }) {
           <p className="mt-0.5 text-[11px] uppercase tracking-[0.16em] text-primary">
             {roleLabel(staff?.role)}
           </p>
-          <button
-            type="button"
-            className="mt-3 inline-flex cursor-pointer items-center gap-2 text-[11px] uppercase tracking-[0.16em] text-muted-foreground hover:text-primary"
+          <Button
+            variant="ghost"
+            size="sm"
+            className="mt-3 px-0"
             onClick={() => void logout()}
           >
             <SignOut size={16} weight="duotone" />
             Sign out
-          </button>
+          </Button>
         </div>
       </aside>
 
       <div className="min-w-0">
-        <header className="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-border bg-background/85 px-4 py-3 backdrop-blur print:hidden sm:px-6">
+        <header className="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-border bg-background/70 px-4 py-3 backdrop-blur-xl backdrop-saturate-150 print:hidden sm:px-6">
           <div className="flex items-center gap-3">
             <span
               className={
@@ -163,9 +168,9 @@ export function AppShell({ children }: { children: ReactNode }) {
             <Clock />
           </div>
           {isSuper ? (
-            <select
+            <Select
               aria-label="Looking at"
-              className="min-h-10 max-w-[16rem] border-0 border-b border-input bg-transparent text-sm"
+              className="min-h-10 max-w-[16rem] text-sm"
               value={selectedRestaurantId ?? ""}
               onChange={(event) => {
                 void selectRestaurant(event.target.value || null);
@@ -177,23 +182,24 @@ export function AppShell({ children }: { children: ReactNode }) {
                   {row.name}
                 </option>
               ))}
-            </select>
+            </Select>
           ) : (
             <p className="truncate text-sm text-muted-foreground">
               {restaurantName}
             </p>
           )}
-          <button
-            type="button"
-            className="inline-flex cursor-pointer items-center gap-2 text-[11px] uppercase tracking-[0.16em] text-muted-foreground hover:text-primary lg:hidden"
+          <Button
+            variant="ghost"
+            size="sm"
+            className="px-0 lg:hidden"
             onClick={() => void logout()}
+            aria-label="Sign out"
           >
             <SignOut size={16} weight="duotone" />
-            <span className="sr-only">Sign out</span>
-          </button>
+          </Button>
         </header>
         <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
-          {children}
+          <PageEnter>{children}</PageEnter>
         </main>
       </div>
     </div>
@@ -230,7 +236,7 @@ function NavGroups({
                   <Link
                     href={item.href}
                     className={cn(
-                      "relative flex min-h-11 items-center gap-3 rounded-md px-3 text-sm transition-colors duration-300",
+                      "tap relative flex min-h-11 items-center gap-3 rounded-md px-3 text-sm transition-colors duration-500",
                       active
                         ? "text-foreground"
                         : "text-muted-foreground hover:text-foreground",
@@ -240,7 +246,7 @@ function NavGroups({
                       <motion.span
                         layoutId="nav-active"
                         className="absolute inset-0 rounded-md bg-secondary"
-                        transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                        transition={appleSpring}
                       />
                     ) : null}
                     <Icon

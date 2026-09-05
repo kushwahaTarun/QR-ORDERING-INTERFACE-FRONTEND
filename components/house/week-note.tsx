@@ -22,7 +22,7 @@ export function WeekNote({ note }: { note: Insight }) {
   const tags = note.tags?.filter(Boolean) ?? [];
 
   return (
-    <article className="surface flex gap-4 rounded-md p-4 transition-[border-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-primary/40">
+    <article className="group lift surface flex gap-4 rounded-md p-4 hover:border-primary/40">
       <IconWell icon={tone.icon} size="sm" />
       <div className="min-w-0 flex-1">
         <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-primary">

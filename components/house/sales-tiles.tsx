@@ -24,7 +24,7 @@ export function SoldDishCard({
     <article
       aria-label={`${name}, ${quantity} sold, ${inr(revenue)}${lead ? ", sold most" : ""}`}
       className={cn(
-        "surface flex gap-4 rounded-md p-4 transition-[border-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-primary/40",
+        "lift surface flex gap-4 rounded-md p-4 hover:border-primary/40",
         lead && "border-primary/45",
       )}
     >
@@ -75,7 +75,7 @@ export function TableTile({
     <article
       aria-label={`Table ${tableNumber}, ${orders} ${orderWord(orders)}, ${inr(revenue)}${lead ? ", busiest" : ""}`}
       className={cn(
-        "group relative overflow-hidden rounded-md border border-border text-center transition-[border-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-primary/50",
+        "lift group relative overflow-hidden rounded-md border border-border text-center hover:border-primary/50",
         lead && "border-primary/50",
       )}
     >

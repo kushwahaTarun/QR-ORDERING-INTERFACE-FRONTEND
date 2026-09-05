@@ -72,7 +72,7 @@ export default function RestaurantsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <PageHeader
         icon={Buildings}
         title="All restaurants"
@@ -97,7 +97,7 @@ export default function RestaurantsPage() {
                   <td className="px-4 py-3">
                     <button
                       type="button"
-                      className="cursor-pointer text-left font-medium hover:text-primary"
+                      className="press cursor-pointer text-left font-medium hover:text-primary"
                       onClick={() => void selectRestaurant(row.id)}
                     >
                       {row.name}

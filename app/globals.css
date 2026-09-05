@@ -22,6 +22,10 @@
   --radius: 0.2rem;
   --paper: #f3ead8;
   --ink: #1c140e;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-press: cubic-bezier(0.3, 0, 1, 1);
+  --duration-out: 480ms;
+  --duration-press: 90ms;
 }
 
 @theme inline {
@@ -132,6 +136,73 @@ h3,
   border: 1px solid rgba(201, 163, 106, 0.28);
   background: rgba(201, 163, 106, 0.1);
   color: var(--primary);
+  transition: transform var(--duration-out) var(--ease-out-expo);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .icon-well {
+    transform: scale(1.08);
+  }
+}
+
+.lift,
+.press,
+.tap {
+  touch-action: manipulation;
+}
+
+.lift {
+  transition:
+    transform var(--duration-out) var(--ease-out-expo),
+    border-color var(--duration-out) var(--ease-out-expo),
+    background-color var(--duration-out) var(--ease-out-expo);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lift:hover {
+    transform: translateY(-3px) scale(1.012);
+  }
+}
+
+.press {
+  transition:
+    transform var(--duration-out) var(--ease-out-expo),
+    color var(--duration-out) var(--ease-out-expo),
+    background-color var(--duration-out) var(--ease-out-expo),
+    border-color var(--duration-out) var(--ease-out-expo);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .press:hover {
+    transform: scale(1.03);
+  }
+}
+
+.press:active,
+.tap:active {
+  transform: scale(0.97);
+  transition-duration: var(--duration-press);
+  transition-timing-function: var(--ease-press);
+}
+
+.tap {
+  transition: transform var(--duration-out) var(--ease-out-expo);
+}
+
+.press:disabled,
+.press:disabled:hover,
+.press:disabled:active {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lift:hover,
+  .press:hover,
+  .press:active,
+  .tap:active,
+  .group:hover .icon-well {
+    transform: none;
+  }
 }
 
 .live-dot {

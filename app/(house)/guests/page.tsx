@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import {
   AddressBook,
   CurrencyInr,
-  MagnifyingGlass,
   Megaphone,
   UsersThree,
 } from "@phosphor-icons/react";
@@ -14,7 +13,7 @@ import { GuestCard } from "@/components/house/guest-card";
 import { KpiCard } from "@/components/house/kpi-card";
 import { LoadState } from "@/components/house/load-state";
 import { PageHeader } from "@/components/house/page-header";
-import { Input } from "@/components/ui/input";
+import { SearchField } from "@/components/ui/search-field";
 import { inr } from "@/lib/format";
 import type { Guest } from "@/lib/types";
 import { useHouse } from "@/lib/use-house";
@@ -83,23 +82,14 @@ export default function GuestsPage() {
               />
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <label className="relative min-w-0 flex-1">
-                <MagnifyingGlass
-                  className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 text-primary"
-                  size={18}
-                  weight="duotone"
-                  aria-hidden="true"
-                />
-                <Input
-                  type="search"
-                  className="pl-7"
-                  placeholder="Find a name or mobile"
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  aria-label="Find a name or mobile"
-                />
-              </label>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+              <SearchField
+                id="find-guest"
+                label="Find a name or mobile"
+                placeholder="Riya or 8874"
+                value={query}
+                onChange={setQuery}
+              />
               <FilterChip
                 active={offersOnly}
                 onClick={() => setOffersOnly((current) => !current)}

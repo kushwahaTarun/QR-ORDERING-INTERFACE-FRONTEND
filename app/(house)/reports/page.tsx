@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import {
   ChartLineUp,
   CurrencyInr,
@@ -12,6 +11,7 @@ import { KpiCard } from "@/components/house/kpi-card";
 import { LoadState } from "@/components/house/load-state";
 import { PageHeader } from "@/components/house/page-header";
 import { WeekNoteList } from "@/components/house/week-note";
+import { Button } from "@/components/ui/button";
 import { formatVisit, inr } from "@/lib/format";
 import type { Insight } from "@/lib/types";
 import { useHouse } from "@/lib/use-house";
@@ -43,13 +43,10 @@ export default function ReportsPage() {
         title="This week"
         description="A short read of the last 7 days — what to keep, what to watch, what to do tonight."
         actions={
-          <Link
-            href="/analytics"
-            className="inline-flex min-h-11 items-center gap-2 text-[11px] uppercase tracking-[0.16em] text-primary"
-          >
+          <Button href="/analytics" variant="link">
             <ChartLineUp size={18} weight="duotone" />
             See the numbers
-          </Link>
+          </Button>
         }
       />
       <LoadState loading={loading} error={error}>
@@ -74,7 +71,7 @@ export default function ReportsPage() {
             </div>
 
             <section className="surface rounded-md p-5">
-              <div className="flex items-start gap-3">
+              <div className="group flex items-start gap-3">
                 <IconWell icon={Notebook} size="sm" />
                 <div className="min-w-0">
                   <h2 className="font-heading text-2xl leading-tight">

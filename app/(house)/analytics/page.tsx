@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import { LayoutGroup } from "motion/react";
 import {
   ChartLineUp,
   Clock,
@@ -128,7 +129,7 @@ function ChartCard({
   children: ReactNode;
 }) {
   return (
-    <section className="surface overflow-visible rounded-md p-5">
+    <section className="group surface overflow-visible rounded-md p-5">
       <div className="mb-5 flex items-start gap-3">
         <IconWell icon={icon} size="sm" />
         <div className="min-w-0">
@@ -229,17 +230,20 @@ export default function SalesPage() {
         title="Sales"
         description="What sold, which days were busy, and what time guests ordered."
       />
-      <div className="flex flex-wrap gap-2" role="group" aria-label="Days to show">
-        {WINDOWS.map((range) => (
-          <FilterChip
-            key={range}
-            active={days === range}
-            onClick={() => setDays(range)}
-          >
-            Last {range} days
-          </FilterChip>
-        ))}
-      </div>
+      <LayoutGroup>
+        <div className="flex flex-wrap gap-2" role="group" aria-label="Days to show">
+          {WINDOWS.map((range) => (
+            <FilterChip
+              key={range}
+              layoutId="sales-days"
+              active={days === range}
+              onClick={() => setDays(range)}
+            >
+              Last {range} days
+            </FilterChip>
+          ))}
+        </div>
+      </LayoutGroup>
       <LoadState loading={loading && !data} error={error}>
         {data ? (
           <div className="space-y-6">
